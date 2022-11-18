@@ -4,25 +4,64 @@
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
+
+<style>
+    body {
+        text-align: center;
+    }
+    table,
+    th,
+    td {
+        margin: 0 auto;
+        padding: 10px;
+        border: 2px solid gray;
+        border-collapse: collapse;
+    }
+    form {
+        display: inline;
+    }
+</style>
+
 <body>
 
-<h2 style="text-align: center;">All users</h2>
-<br><br>
-
+<h2>All users</h2>
+<br>
 
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Age</th>
-  </tr>
+    <tr>
+        <th>Gender</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Age</th>
+        <th>Operations</th>
+    </tr>
 
-  <th:block th:each="user : ${allUsers}">
-    <td th:text="${user.name}"></td>
-    <td th:text="${user.lastName}"></td>
-    <td th:text="${user.age}"></td>
-  </th:block>
+    <th:block th:each="user : ${allUsers}">
+        <tr>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.age}"></td>
+            <td>
+                <form action="/updateUser" method="get">
+                    <input type="hidden" name="usrId" th:value="${user.id}">
+                    <input type="submit" value="Update"/>
+                </form>
+                <form action="/deleteUser" method="get">
+                    <input type="hidden" name="usrId" th:value="${user.id}">
+                    <input type="submit" value="Delete"/>
+                </form>
+                <!--
+                <a th:href="@{'deleteUser?usrId=' + ${user.id}}">
+                    <input type="button" value="Delete"/>
+                </a>
+                -->
+            </td>
+        </tr>
+    </th:block>
 </table>
+<br>
+<input type="button" value="Add" onclick="window.location.href = 'addNewUser'">
 
 </body>
 </html>

@@ -1,11 +1,12 @@
 package web.dao;
 
-import org.hibernate.Metamodel;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,26 @@ public class UserDaoImp implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user", User.class);
-        return query.getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
+    }
+
+    @Override
+    public void saveUser(User user) {
+        try (Session session = entityManager.unwrap(Session.class)) {
+            session.saveOrUpdate(user);
+        }
+    }
+
+    @Override
+    public User getUser(int id) {
+        try (Session session = entityManager.unwrap(Session.class)) {
+            return session.get(User.class, id);
+        }
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        Query query = entityManager.createQuery("delete from User where id = :userId");
+        query.setParameter("userId", id).executeUpdate();
     }
 }

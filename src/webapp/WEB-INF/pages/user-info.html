@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>User info</title>
+</head>
+<style>
+    label {
+        display: block;
+    }
+</style>
+
+<body>
+
+<h2>Edit user</h2>
+
+<form th:action="saveUser" th:object="${user}">
+    <input type="hidden" th:field="*{id}"/>
+    <label>Gender: </label>
+    <input type="radio" th:field="*{gender}" value="M" required/>
+    Male
+    <br>
+    <input type="radio" th:field="*{gender}" value="F" required/>
+    Female
+    <br><br>
+    <label>Name: </label>
+    <input type="text" th:field="*{name}" minlength="2" maxlength="50" required/>
+    <br><br>
+    <label>Surname: </label>
+    <input type="text" th:field="*{surname}" minlength="2" maxlength="50" required/>
+    <br><br>
+    <label>Age: </label>
+    <input type="number" th:field="*{age}" min="0" max="99" required/>
+    <br><br>
+    <input type="submit" value="Add"/>
+</form>
+
+</body>
+</html>

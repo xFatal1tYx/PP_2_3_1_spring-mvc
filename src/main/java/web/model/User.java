@@ -9,10 +9,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "gender")
+    private Gender gender;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "surname")
     private String surname;
+
     @Column(name = "age")
     private int age;
 
@@ -20,7 +27,9 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, int age) {
+    public User(int id, Gender gender, String name, String surname, int age) {
+        this.id = id;
+        this.gender = gender;
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -34,6 +43,14 @@ public class User {
         this.id = id;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public String getName() {
         return name;
     }
@@ -42,11 +59,11 @@ public class User {
         this.name = name;
     }
 
-    public String getLastName() {
+    public String getSurname() {
         return surname;
     }
 
-    public void setLastName(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
